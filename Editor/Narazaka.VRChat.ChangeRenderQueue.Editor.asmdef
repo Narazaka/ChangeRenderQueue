@@ -1,0 +1,20 @@
+{
+    "name": "Narazaka.VRChat.ChangeRenderQueue.Editor",
+    "rootNamespace": "",
+    "references": [
+        "VRC.SDKBase",
+        "Narazaka.VRChat.ChangeRenderQueue",
+        "nadena.dev.ndmf"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

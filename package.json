@@ -1,0 +1,17 @@
+{
+  "name": "net.narazaka.vrchat.change-render-queue",
+  "version": "1.0.0",
+  "displayName": "Change Render Queue",
+  "description": "Change Render Queue",
+  "author": {
+    "name": "Narazaka",
+    "url": "https://github.com/Narazaka"
+  },
+  "license": "Zlib",
+  "type": "tool",
+  "url" : "https://github.com/Narazaka/ChangeRenderQueue.git",
+  "unity": "2022.3",
+  "vpmDependencies": {
+    "com.vrchat.worlds": ">=3.7.4"
+  }
+}

@@ -4,6 +4,8 @@ Change Render Queue of the material slot. Includes the animations.
 
 マテリアルスロットのRenderQueueを変更する。当該スロットを含むアニメーションもちゃんと変更されます。
 
+（RenderQueueの変更のみなので、透過マテリアルにするとかどうとかは自分でやる必要がある）
+
 ## Install
 
 ### VCC用インストーラーunitypackageによる方法（おすすめ）

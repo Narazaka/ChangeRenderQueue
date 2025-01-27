@@ -1,6 +1,8 @@
 # Change Render Queue
 
-desc
+Change Render Queue of the material slot. Includes the animations.
+
+マテリアルスロットのRenderQueueを変更する。当該スロットを含むアニメーションもちゃんと変更されます。
 
 ## Install
 
@@ -16,7 +18,7 @@ https://github.com/Narazaka/ChangeRenderQueue/releases/latest から `net.naraza
 
 ## Usage
 
-TODO
+レンダーキューを変更したいRendererのGameObjectに「Add Component」ボタンから「ChangeRenderQueue」を付けて設定する。
 
 ## License
 

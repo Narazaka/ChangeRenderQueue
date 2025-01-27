@@ -2,7 +2,7 @@
   "name": "net.narazaka.vrchat.change-render-queue",
   "version": "1.0.0",
   "displayName": "Change Render Queue",
-  "description": "Change Render Queue",
+  "description": "Change Render Queue of the material slot. Includes the animations.",
   "author": {
     "name": "Narazaka",
     "url": "https://github.com/Narazaka"
@@ -12,6 +12,7 @@
   "url" : "https://github.com/Narazaka/ChangeRenderQueue.git",
   "unity": "2022.3",
   "vpmDependencies": {
-    "com.vrchat.worlds": ">=3.7.4"
+    "com.vrchat.worlds": ">=3.7.4",
+    "nadena.dev.ndmf": ">=1.3.0 <2.0.0-a"
   }
 }

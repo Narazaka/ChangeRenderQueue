@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Narazaka.VRChat.ChangeRenderQueue.Editor
 {
+    [CanEditMultipleObjects]
     [CustomEditor(typeof(ChangeRenderQueue))]
     class ChangeRenderQueueEditor : UnityEditor.Editor
     {
@@ -25,7 +26,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
             EditorGUILayout.PropertyField(MaterialIndex);
 
             var renderer = (target as ChangeRenderQueue).GetComponent<Renderer>();
-            if (renderer != null)
+            if (renderer != null && targets.Length < 2)
             {
                 var materials = renderer.sharedMaterials;
                 var lineCount = materials.Length + 1;

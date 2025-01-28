@@ -1,6 +1,6 @@
 {
   "name": "net.narazaka.vrchat.change-render-queue",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "displayName": "Change Render Queue",
   "description": "Change Render Queue of the material slot. Includes the animations.",
   "author": {

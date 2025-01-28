@@ -22,6 +22,11 @@ https://github.com/Narazaka/ChangeRenderQueue/releases/latest から `net.naraza
 
 レンダーキューを変更したいRendererのGameObjectに「Add Component」ボタンから「ChangeRenderQueue」を付けて設定する。
 
+## Changelog
+
+- 1.0.0
+  - リリース
+
 ## License
 
 [Zlib License](LICENSE.txt)

@@ -11,6 +11,9 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
 {
     public class ChangeRenderQueuePlugin : Plugin<ChangeRenderQueuePlugin>
     {
+        public static bool DEBUG = false;
+        static void Log(string message) { if (DEBUG) Debug.Log(message); }
+
         public override string DisplayName => nameof(ChangeRenderQueuePlugin);
         public override string QualifiedName => "net.narazaka.vrchat.change-render-queue";
         protected override void Configure()
@@ -83,7 +86,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 {
                     foreach (var binding in key.EditorCurveBindings())
                     {
-                        Debug.Log($"make binding: {binding.type} [{binding.path}] [{binding.propertyName}]");
+                        Log($"make binding: {binding.type} [{binding.path}] [{binding.propertyName}]");
                         editorCurveBindings[binding] = key;
                     }
                 }
@@ -129,13 +132,13 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
 
             void ProcessLayer(VRCAvatarDescriptor.CustomAnimLayer animLayer)
             {
-                Debug.Log($"layer: {animLayer.isDefault} {animLayer.animatorController}");
+                Log($"layer: {animLayer.isDefault} {animLayer.animatorController}");
                 if (animLayer.isDefault || animLayer.animatorController == null) return;
 
                 var animator = animLayer.animatorController;
                 foreach (var clip in animator.animationClips)
                 {
-                    Debug.Log($"clip: {clip.name}");
+                    Log($"clip: {clip.name}");
                     ProcessClip(clip);
                 }
             }
@@ -145,10 +148,10 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 var bindings = AnimationUtility.GetObjectReferenceCurveBindings(clip);
                 foreach (var binding in bindings)
                 {
-                    Debug.Log($"binding: {binding.type} [{binding.path}] [{binding.propertyName}]");
+                    Log($"binding: {binding.type} [{binding.path}] [{binding.propertyName}]");
                     if (EditorCurveBindings.TryGetValue(EditorCurveBindingPartial.From(binding), out var materialSlot))
                     {
-                        Debug.Log($"found binding MaterialSlot: {materialSlot.RendererType} [{materialSlot.RendererPath}] [{materialSlot.MaterialIndex}]");
+                        Log($"found binding MaterialSlot: {materialSlot.RendererType} [{materialSlot.RendererPath}] [{materialSlot.MaterialIndex}]");
                         var keyframes = AnimationUtility.GetObjectReferenceCurve(clip, binding);
                         foreach (var keyframe in keyframes)
                         {
@@ -199,15 +202,15 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 // debug
                 foreach (var materialSlot in MaterialInfo.Keys)
                 {
-                    Debug.Log($"MaterialSlot: {materialSlot.RendererType} [{materialSlot.RendererPath}] [{materialSlot.MaterialIndex}]");
+                    Log($"MaterialSlot: {materialSlot.RendererType} [{materialSlot.RendererPath}] [{materialSlot.MaterialIndex}]");
                     foreach (var material in MaterialInfo[materialSlot].GetMaterials())
                     {
-                        Debug.Log($"  Material: {material}");
+                        Log($"  Material: {material}");
                     }
                 }
                 foreach (var (material, renderQueue) in ReplacedMaterials.Keys)
                 {
-                    Debug.Log($"ReplacedMaterial: {material} [{renderQueue}] => {ReplacedMaterials[(material, renderQueue)]}");
+                    Log($"ReplacedMaterial: {material} [{renderQueue}] => {ReplacedMaterials[(material, renderQueue)]}");
                 }
             }
 

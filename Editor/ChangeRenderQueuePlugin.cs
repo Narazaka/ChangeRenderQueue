@@ -223,6 +223,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                     {
                         var newMaterial = new Material(material);
                         newMaterial.renderQueue = renderQueue;
+                        newMaterial.name = $"{material.name} (RenderQueue {renderQueue})";
                         ObjectRegistry.RegisterReplacedObject(material, newMaterial);
                         ReplacedMaterials[(material, renderQueue)] = newMaterial;
                     }
@@ -235,11 +236,16 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 {
                     var materialSlotInfo = MaterialInfo[materialSlot];
                     var materials = materialSlotInfo.GetMaterials();
+                    Log($"Replace? {materialSlot.RendererPath} {materialSlot.MaterialIndex} {materialSlotInfo.RenderQueue} ");
                     foreach (var material in materials)
                     {
+                        Log($"  Replace? {material.name}");
                         if (ReplacedMaterials.TryGetValue((material, materialSlotInfo.RenderQueue), out var newMaterial))
                         {
-                            materialSlot.Renderer.sharedMaterials[materialSlot.MaterialIndex] = newMaterial;
+                            Log($"    Replace! {material.name} => {newMaterial.name}");
+                            var sharedMaterials = materialSlot.Renderer.sharedMaterials;
+                            sharedMaterials[materialSlot.MaterialIndex] = newMaterial;
+                            materialSlot.Renderer.sharedMaterials = sharedMaterials;
                         }
                     }
                 }
@@ -329,7 +335,8 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 };
             }
 
-            public EditorCurveBindingPartial EditorCurveBinding() {
+            public EditorCurveBindingPartial EditorCurveBinding()
+            {
                 return new EditorCurveBindingPartial
                 {
                     type = RendererType,
@@ -338,7 +345,8 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 };
             }
 
-            public EditorCurveBindingPartial FileIdEditorCurveBinding() {
+            public EditorCurveBindingPartial FileIdEditorCurveBinding()
+            {
                 return new EditorCurveBindingPartial
                 {
                     type = RendererType,
@@ -347,7 +355,8 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 };
             }
 
-            public EditorCurveBindingPartial PathIdEditorCurveBinding() {
+            public EditorCurveBindingPartial PathIdEditorCurveBinding()
+            {
                 return new EditorCurveBindingPartial
                 {
                     type = RendererType,

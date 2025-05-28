@@ -8,6 +8,7 @@
     "url": "https://github.com/Narazaka"
   },
   "license": "Zlib",
+  "changelogUrl": "https://github.com/Narazaka/ChangeRenderQueue#changelog",
   "type": "tool",
   "url" : "https://github.com/Narazaka/ChangeRenderQueue.git",
   "unity": "2022.3",

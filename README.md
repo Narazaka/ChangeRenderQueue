@@ -24,6 +24,9 @@ https://github.com/Narazaka/ChangeRenderQueue/releases/latest から `net.naraza
 
 ## Changelog
 
+- 1.0.3
+  - アニメーションで変更されるマテリアルスロットが、ビルド前の元のマテリアルに相当するものにアサインされないことがあった問題を修正。
+    - Custom Animationsをフォールバックで無効にしたとき、またはImposterの生成時に問題になります。
 - 1.0.2
   - マテリアルスロットがアニメーション制御されていない場合に動作していなかった問題を修正
 - 1.0.0

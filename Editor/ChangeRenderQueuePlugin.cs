@@ -76,7 +76,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 {
                     MaterialInfo[key] = new MaterialSlotInfo(renderQueue);
                 }
-                MaterialInfo[key].AddMaterial(material);
+                MaterialInfo[key].AddRendererMaterial(material);
             }
 
             public AnimatorAnalyzer AnimatorAnalyzer()
@@ -235,18 +235,14 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 foreach (var materialSlot in MaterialInfo.Keys)
                 {
                     var materialSlotInfo = MaterialInfo[materialSlot];
-                    var materials = materialSlotInfo.GetMaterials();
-                    Log($"Replace? {materialSlot.RendererPath} {materialSlot.MaterialIndex} {materialSlotInfo.RenderQueue} ");
-                    foreach (var material in materials)
+                    var material = materialSlotInfo.RendererMaterial;
+                    Log($"Replace? path=[{materialSlot.RendererPath}] slot=[{materialSlot.MaterialIndex}] queue=[{materialSlotInfo.RenderQueue}] material name=[{material.name}]");
+                    if (ReplacedMaterials.TryGetValue((material, materialSlotInfo.RenderQueue), out var newMaterial))
                     {
-                        Log($"  Replace? {material.name}");
-                        if (ReplacedMaterials.TryGetValue((material, materialSlotInfo.RenderQueue), out var newMaterial))
-                        {
-                            Log($"    Replace! {material.name} => {newMaterial.name}");
-                            var sharedMaterials = materialSlot.Renderer.sharedMaterials;
-                            sharedMaterials[materialSlot.MaterialIndex] = newMaterial;
-                            materialSlot.Renderer.sharedMaterials = sharedMaterials;
-                        }
+                        Log($"  Replace! [{material.name}] => [{newMaterial.name}]");
+                        var sharedMaterials = materialSlot.Renderer.sharedMaterials;
+                        sharedMaterials[materialSlot.MaterialIndex] = newMaterial;
+                        materialSlot.Renderer.sharedMaterials = sharedMaterials;
                     }
                 }
             }
@@ -412,12 +408,19 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
         {
             public readonly int RenderQueue;
             HashSet<Material> Materials = new HashSet<Material>();
+            public Material RendererMaterial { get; private set; }
 
             public MaterialSlotInfo(int renderQueue)
             {
                 RenderQueue = renderQueue;
             }
 
+            public void AddRendererMaterial(Material material)
+            {
+                if (RendererMaterial != null) throw new System.InvalidOperationException("RendererMaterial already set.");
+                RendererMaterial = material;
+                AddMaterial(material);
+            }
             public void AddMaterial(Material material) => Materials.Add(material);
 
             public HashSet<Material> GetMaterials() => Materials;

@@ -24,6 +24,8 @@ https://github.com/Narazaka/ChangeRenderQueue/releases/latest から `net.naraza
 
 ## Changelog
 
+- 1.0.5
+  - AO Material Editorの後に動作するように
 - 1.0.4
   - package.jsonにchangelogUrlを追加
 - 1.0.3

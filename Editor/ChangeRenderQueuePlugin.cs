@@ -18,7 +18,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
         public override string QualifiedName => "net.narazaka.vrchat.change-render-queue";
         protected override void Configure()
         {
-            InPhase(BuildPhase.Transforming).AfterPlugin("nadena.dev.modular-avatar").Run(DisplayName, ctx =>
+            InPhase(BuildPhase.Transforming).AfterPlugin("nadena.dev.modular-avatar").AfterPlugin("aoyon.material-editor").Run(DisplayName, ctx =>
             {
                 var changeRenderQueues = ctx.AvatarRootTransform.GetComponentsInChildren<ChangeRenderQueue>(true);
                 if (changeRenderQueues.Length == 0) return;

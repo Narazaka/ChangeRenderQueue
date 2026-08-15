@@ -23,23 +23,35 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 var changeRenderQueues = ctx.AvatarRootTransform.GetComponentsInChildren<ChangeRenderQueue>(true);
                 if (changeRenderQueues.Length == 0) return;
 
-                var rendererAnalyzer = new RendererAnalyzer(ctx.AvatarRootTransform);
+                // GetComponentsInChildren の並びは同一 GameObject 内ではコンポーネントの並び順に
+                // なるので、そのまま RenderQueueResolver の優先度として使える
+                var settings = new Dictionary<Renderer, List<(int MaterialIndex, int RenderQueue)>>();
+                var renderers = new List<Renderer>();
                 foreach (var changeRenderQueue in changeRenderQueues)
                 {
                     var renderer = changeRenderQueue.GetComponent<Renderer>();
                     if (renderer == null) continue;
+                    if (!settings.TryGetValue(renderer, out var rendererSettings))
+                    {
+                        settings[renderer] = rendererSettings = new List<(int, int)>();
+                        renderers.Add(renderer);
+                    }
+                    rendererSettings.Add((changeRenderQueue.MaterialIndex, changeRenderQueue.RenderQueue));
+                }
+
+                var rendererAnalyzer = new RendererAnalyzer(ctx.AvatarRootTransform);
+                foreach (var renderer in renderers)
+                {
                     var materials = renderer.sharedMaterials;
-                    if (changeRenderQueue.MaterialIndex < 0)
+                    for (var i = 0; i < materials.Length; i++)
                     {
-                        for (int i = 0; i < materials.Length; i++)
-                        {
-                            rendererAnalyzer.AddMaterialSlot(renderer, i, changeRenderQueue.RenderQueue);
-                        }
+                        if (!RenderQueueResolver.TryResolve(settings[renderer], i, out var renderQueue)) continue;
+                        rendererAnalyzer.AddMaterialSlot(renderer, i, renderQueue);
                     }
-                    else if (changeRenderQueue.MaterialIndex < materials.Length)
-                    {
-                        rendererAnalyzer.AddMaterialSlot(renderer, changeRenderQueue.MaterialIndex, changeRenderQueue.RenderQueue);
-                    }
+                }
+
+                foreach (var changeRenderQueue in changeRenderQueues)
+                {
                     Object.DestroyImmediate(changeRenderQueue);
                 }
 

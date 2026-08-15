@@ -24,6 +24,9 @@ https://github.com/Narazaka/ChangeRenderQueue/releases/latest から `net.naraza
 
 ## Changelog
 
+- 1.1.0
+  - NDMF Previewを追加
+  - 全体指定（-1）と個別スロット指定の混在がエラーを吐く問題を修正
 - 1.0.5
   - AO Material Editorの後に動作するように
 - 1.0.4

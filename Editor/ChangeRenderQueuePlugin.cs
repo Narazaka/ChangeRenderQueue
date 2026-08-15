@@ -59,7 +59,7 @@ namespace Narazaka.VRChat.ChangeRenderQueue.Editor
                 animatorAnalyzer.Process(ctx.AvatarDescriptor);
                 var materialGenerator = animatorAnalyzer.MaterialGenerator();
                 materialGenerator.GenerateAndReplace(ctx.AvatarDescriptor);
-            });
+            }).PreviewingWith(new ChangeRenderQueuePreview());
         }
 
         class RendererAnalyzer
